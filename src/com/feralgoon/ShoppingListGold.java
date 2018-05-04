@@ -58,7 +58,15 @@ public class ShoppingListGold
         }
         else if (input.toUpperCase().startsWith("FIND"))
         {
-            String item = input.substring(5);
+            String item;
+            try
+            {
+                item = input.substring(5);
+            } catch (StringIndexOutOfBoundsException e)
+            {
+                System.out.println("Invalid find parameter.");
+                return;
+            }
             int found = findItem(item);
 
             if (found == -1)
@@ -123,9 +131,9 @@ public class ShoppingListGold
         try
         {
             selection = Integer.parseInt(input.substring(7));
-        } catch (NumberFormatException e)
+        } catch (NumberFormatException | StringIndexOutOfBoundsException e)
         {
-            System.out.println("Invalid Item Selection");
+            System.out.println("Invalid Item parameter");
             System.out.println();
 
             return;
@@ -150,7 +158,18 @@ public class ShoppingListGold
 
     private void addItem(String itemName)
     {
-        int itemIndex = findItem(itemName.substring(4));
+        int itemIndex;
+
+        try
+        {
+            itemIndex = findItem(itemName.substring(4));
+
+        } catch(StringIndexOutOfBoundsException e)
+        {
+            System.out.println("Invalid entry.");
+            System.out.println();
+            return;
+        }
 
         if (itemIndex == -1)
         {
